@@ -1,29 +1,39 @@
 const fs = require('fs');
+const path = require('path');
 const exec = require('child_process').exec;
 
-export const genWasm = async (ans: any, callbackfn: () => {}) => {
+export const genWasm = async (ans: any, callbackfn: (wasmPath: string) => {}) => {
     //write file sync
-    await fs.writeFileSync('ans-circuits/circuit.circom',
-        "pragma circom 2.0.2;\n" + 
-        "include \"./../node_modules/circomlib/circuits/poseidon.circom\";\n" + 
-        "\n" + 
-        "template Ans(){\n" + 
-        "    signal input ans;\n" + 
-        "    signal input nonce;\n" + 
-        "    signal output commitment <== Poseidon(2)([ans, nonce]);\n" + 
-        "    signal one <== 1;\n" + 
-        "\n" + 
-        "    ans === one * " + ans + ";\n" + 
-        "}" + 
-        "component main = Ans();"
+    const filename = `circuit-${ans}.circom`
+    const filepath = path.resolve(__dirname, `../ans-circuits/${filename}`)
+    console.log({
+        filepath
+    })
+    
+    await fs.writeFileSync(filepath,
+        `pragma circom 2.0.2;
+        include "../node_modules/circomlib/circuits/poseidon.circom";
+
+        template Ans(){
+            signal input ans;
+            signal input nonce;
+            signal output commitment <== Poseidon(2)([ans, nonce]);
+            signal one <== 1;
+
+            ans === one *  ${ans};
+        }
+        component main = Ans();
+        `
     );
+    const wasmPath = path.resolve(__dirname, `../ans-circuits/circuit-${ans}_js/circuit-${ans}.wasm`);
     await exec(
-        'circom ./ans-circuits/circuit.circom --wasm -o ans-circuits',
+        `circom ${filepath} --wasm -o ans-circuits`,
         (error: any, stdout: any, stderr: any) => {
             console.log(`${stdout}`);
             console.log(`${stderr}`);
             if (error !== null)
                 console.log(`ERROR: ${error}`);
-            callbackfn();
+            callbackfn(wasmPath);
         });
+    return wasmPath;
 };

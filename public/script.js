@@ -26,8 +26,9 @@ async function submit(ans) {
   const web3 = new Web3(window.ethereum);
   const contract = await new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
   console.log("zk_prf:", zk_prf)
-  // const res = await contract.methods.submitAns(zk_prf, r.pub[0]).send({ from: account });
-  // console.log(res);
+  const res = await contract.methods.submitAns(zk_prf, r.pub[0]).send({ from: account });
+  // await res.wait();
+  console.log(res);
   const isCorrect = await contract.methods.checkCertificate().call({ from: account });
   console.log("isCorrect: ", isCorrect);
   if(isCorrect) {

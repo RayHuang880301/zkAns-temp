@@ -1,6 +1,7 @@
 {
   "name": "hardhat-project",
   "scripts": {
+    "server": "ts-node server/server.ts",
     "start": "hardhat node",
     "clean": "hardhat clean && rm -rf cache",
     "compile": "hardhat compile",
