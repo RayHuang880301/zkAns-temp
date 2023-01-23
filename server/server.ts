@@ -3,7 +3,7 @@ const fs = require('fs');
 const url = require('url');
 const path = require('path'); 
 const express = require('express');
-const { genWasm } = require('../utils/genWasm');
+const { genWasm } = require('./genWasm');
 var app = express();
 
 
@@ -42,16 +42,8 @@ app.use('/circuit.wasm', async function(req: any, res: any) {
         })
         return
     }
-    console.log({
-        ans
-    })
     await genWasm(ans, (wasmPath: string) => {
         fs.readFile(wasmPath, (err: any, data: any) => {
-            console.log({
-                wasmPath,
-                err,
-                data
-            })
             if (err) {
                 res.writeHead(404);
                 res.write('File Not Found');
