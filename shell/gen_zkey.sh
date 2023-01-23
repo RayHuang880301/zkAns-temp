@@ -25,9 +25,9 @@ if test -f "$FILE"; then
     snarkjs zkey export bellman circuits/setup/circuit_0002.zkey  circuits/setup/challenge_phase2_0003
     snarkjs zkey bellman contribute bn128 circuits/setup/challenge_phase2_0003 circuits/setup/response_phase2_0003 -e="some random text"
     snarkjs zkey import bellman circuits/setup/circuit_0002.zkey circuits/setup/response_phase2_0003 circuits/setup/circuit_0003.zkey -n="Third contribution name"
-    snarkjs zkey beacon circuits/setup/circuit_0003.zkey root/circuit_final.zkey 0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 10 -n="Final Beacon phase2"
-    snarkjs zkey export verificationkey root/circuit_final.zkey root/verification_key.json
-    snarkjs zkey export solidityverifier root/circuit_final.zkey contracts/verifier.sol
+    snarkjs zkey beacon circuits/setup/circuit_0003.zkey public/circuit_final.zkey 0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 10 -n="Final Beacon phase2"
+    snarkjs zkey export verificationkey public/circuit_final.zkey public/verification_key.json
+    snarkjs zkey export solidityverifier public/circuit_final.zkey contracts/verifier.sol
 
     sed -i "14c pragma solidity ^0.8.9;" contracts/verifier.sol
 else

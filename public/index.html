@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+		<script src="snarkjs.min.js"></script>
+		<script src="./script.js"></script>
+		<link rel="stylesheet" href="./styles.css" type="text/css" />
+	</head>
+	<body>
+		<header></header>
+		<section class="section">
+			<image src="./assets/closeBox.png" id="box" alt="box" class="box" />
+			<div>
+				<button
+					type="button"
+					id="connectBtn"
+					class="connectBtn"
+					onclick="connect()"
+				>
+					Connect
+				</button>
+			</div>
+			<div>
+				<input type="text" class="input" id="answer" placeholder="Answer" />
+				<button
+					type="button"
+					id="submitBtn"
+					class="submitBtn"
+					onclick="submit(document.getElementById('answer').value)"
+				>
+					Submit
+				</button>
+			</div>
+		</section>
+	</body>
+</html>

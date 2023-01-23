@@ -1,13 +1,12 @@
 node_modules
 .env
-coverage
-coverage.json
+.history
+.vscode
 typechain
 typechain-types
 circuits
-fake-circuits/*.circom
-fake-circuits/
-ptau
+ans-circuits/*.circom
+ans-circuits/
 
 # Hardhat files
 cache
